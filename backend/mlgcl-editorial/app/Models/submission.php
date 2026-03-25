@@ -2,10 +2,19 @@
 
 namespace App\Models;
 
-class Submission extends Model {
-    protected $fillable = ['title', 'abstract', 'author_name', 'author_email', 'type', 'status', 'deadline', 'qr_code'];
-    
-    public function reviews() {
-        return $this->hasMany(Review::class);
-    }
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Submission extends Model
+{
+    use HasFactory;
+        
+        protected $fillable = [
+            'title', 'abstract', 'author_name', 'author_email', 
+            'type', 'status', 'deadline', 'qr_code'
+        ];
+                                    
+        protected $casts = [
+            'deadline' => 'date',
+        ];
 }
