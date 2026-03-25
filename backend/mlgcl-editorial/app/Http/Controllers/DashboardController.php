@@ -15,6 +15,6 @@ class DashboardController extends Controller {
             'completed' => Submission::where('status', 'completed')->count(),
             'overdue' => Review::where('due_date', '<', now())->where('status', 'pending')->count()
         ];
-        return view('dashboard', compact('stats'));
+        return view('pages.dashboard', compact('stats'));
     }
 }
