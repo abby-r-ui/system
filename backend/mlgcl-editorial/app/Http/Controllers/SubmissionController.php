@@ -38,4 +38,15 @@ class SubmissionController extends Controller {
         $pdf = Pdf::loadView('reports.submission', compact('submission'));
         return $pdf->download('submission-report.pdf');
     }
+    
+    public function show($id) {
+        $submission = Submission::with('reviews.reviewer')->findOrFail($id);
+        return view('submissions.show', compact('submission'));
+    }
+
+    public function qr($type, $id) {
+        $url = url("/submissions/{$id}");
+        $qr = QrCode::size(300)->generate($url);
+        return response($qr)->header('Content-Type', 'image/png');
+    }
 }
