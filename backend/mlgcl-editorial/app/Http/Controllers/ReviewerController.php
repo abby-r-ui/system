@@ -21,4 +21,10 @@ class ReviewerController extends Controller {
         $reviews = Review::where('reviewer_id', $id)->with('submission')->get();
         return view('reviewers.reviews', compact('reviewer', 'reviews'));
     }
+
+    public function printProfile($id) {
+        $reviewer = Reviewer::with('reviews')->findOrFail($id);
+        $pdf = Pdf::loadView('reports.reviewer-profile', compact('reviewer'));
+        return $pdf->download("reviewer-{$reviewer->name}.pdf");
+    }
 }
